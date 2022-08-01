@@ -1,16 +1,26 @@
 import PropTypes from 'prop-types';
-import { Label, Input } from './Filter.styled.jsx';
+import styles from './Filter.module.css';
 
-const Filter = ({ onChange, filterValue }) => (
-  <Label>
-    Find contacts by name
-    <Input type="text" name="filter" onChange={onChange} value={filterValue} />
-  </Label>
-);
-
-export default Filter;
+const Filter = props => {
+  const { value, onFilterName } = props;
+  return (
+    <label className={styles.label}>
+      Find contacts by name
+      <input
+        className={styles.input}
+        type="text"
+        name="filter"
+        value={value}
+        onChange={onFilterName}
+        placeholder="Enter search name"
+      />
+    </label>
+  );
+};
 
 Filter.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  filterValue: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  onFilterName: PropTypes.func.isRequired,
 };
+
+export default Filter;

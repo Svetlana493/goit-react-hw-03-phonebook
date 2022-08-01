@@ -1,29 +1,31 @@
 import PropTypes from 'prop-types';
-import Contact from 'components/Contact';
-import { List } from './ContactList.styled.jsx';
+import ContactListItem from 'components/ContactListItem';
 
-const ContactList = ({ contacts, onDeleteContact }) => (
-  <List>
-    {contacts.length ? (
-      contacts.map(({ name, number, id }) => (
-        <li key={id}>
-          <Contact
-            name={name}
-            number={number}
-            id={id}
-            onDeleteContact={onDeleteContact}
-          />
-        </li>
-      ))
-    ) : (
-      <p>Phonebook is empty</p>
-    )}
-  </List>
-);
+import styles from './ContactList.module.css';
 
-export default ContactList;
+const ContactList = ({ filterContact, deleteContact }) => {
+  return (
+    <ul className={styles.list}>
+      {filterContact.map(({ id, name, number }) => (
+        <ContactListItem
+          key={id}
+          contacts={{ id, name, number }}
+          deleteContact={deleteContact}
+        />
+      ))}
+    </ul>
+  );
+};
 
 ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onDeleteContact: PropTypes.func.isRequired,
+  filterContact: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    })
+  ),
+  deleteContact: PropTypes.func.isRequired,
 };
+
+export default ContactList;
